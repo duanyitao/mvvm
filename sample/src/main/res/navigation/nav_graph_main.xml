@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_main"
     app:startDestination="@id/fragmentA">
 
     <fragment
         android:id="@+id/fragmentA"
+        tools:layout="@layout/fragment_a"
         android:name="com.xtc.mvvm.sample.FragmentA"
         android:label="FragmentA">
         <action
@@ -15,5 +17,7 @@
 
     <fragment
         android:id="@+id/fragmentB"
+        tools:layout="@layout/fragment_b"
+        android:label="FragmentB"
         android:name="com.xtc.mvvm.sample.FragmentB" />
 </navigation>

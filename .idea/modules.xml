@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Desktop.mvvm.iml" filepath="$PROJECT_DIR$/.idea/modules/Desktop.mvvm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/mvvm.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/mvvm.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample/mvvm.sample.iml" filepath="$PROJECT_DIR$/.idea/modules/sample/mvvm.sample.iml" />
+    </modules>
+  </component>
+</project>

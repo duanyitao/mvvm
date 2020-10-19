@@ -1,0 +1,170 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    apply from: "${rootDir}/ci.gradle"
+
+    ext.buildConfig = [
+            compileSdk   : 29, // SDK 编译版本
+            minSdk       : 19, // 最小 SDK 版本
+            instantMinSdk: 21, // Instant Run 的最小 SDK 版本
+            targetSdk    : 29, // 目标 SDK 版本
+
+            version      : [
+                    major: 1, // 主版本号
+                    minor: 1, // 子版本号
+                    patch: 0, // 修正版本号
+            ],
+    ]
+
+    // 版本名采用 GNU 风格，主版本号.子版本号.修正版本号，例如 1.2.10
+    ext.buildConfig.version['name'] = "${buildConfig.version.major}.${buildConfig.version.minor}.${buildConfig.version.patch}"
+    // 版本号由版本名映射，主版本号 * 10000 + 子版本号 * 100 + 修正版本号，例如 1.2.10 -> 10210
+    ext.buildConfig.version['code'] = buildConfig.version.major * 10000 + buildConfig.version.minor * 100 + buildConfig.version.patch
+
+    ext.versions = [
+            plugin     : [
+                    android    : '3.6.2',
+                    artifactory: '4.9.3',
+                    ktlint     : '9.2.1',
+            ],
+            kotlin     : '1.3.72',
+            androidx   : [
+                    appcompat    : '1.1.0',
+                    coreKtx      : '1.2.0',
+                    fragmentKtx  : '1.2.4',
+                    collectionKtx: '1.1.0',
+                    annotation   : '1.1.0',
+                    lifecycle    : '2.2.0',
+                    navigation   : '2.2.2',
+                    test         : [
+                            base    : '1.2.0',
+                            junitKtx: '1.1.1',
+                    ],
+            ],
+            test       : [
+                    mockk      : '1.9.3',
+                    robolectric: '4.3.1',
+            ],
+            rx         : [
+                    rxJava   : '2.2.15',
+                    rxKotlin : '2.4.0',
+                    rxAndroid: '2.1.1',
+                    rxBinding: '3.1.0',
+            ],
+            it         : [
+                    util: '1.4.0',
+            ],
+            autoDispose: '1.4.0',
+    ]
+
+    ext.mavenUrl = [
+            aliyun : 'http://maven.aliyun.com/nexus/content/groups/public/',
+            jitpack: 'https://jitpack.io',
+            kotlinx: 'https://kotlin.bintray.com/kotlinx',
+    ]
+
+    ext.artifactory = [
+            groupId   : 'intelligent-terminal',
+            artifactId: 'mvvm'
+    ]
+
+    ext.deps = [
+            plugin         : [
+                    android           : "com.android.tools.build:gradle:${versions.plugin.android}",
+                    artifactory       : "org.jfrog.buildinfo:build-info-extractor-gradle:${versions.plugin.artifactory}",
+                    kotlin            : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+                    ktlint            : "org.jlleitschuh.gradle:ktlint-gradle:${versions.plugin.ktlint}",
+                    navigationSafeArgs: "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.androidx.navigation}",
+            ],
+            kotlin         : [
+                    stdlib    : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+                    junit     : "org.jetbrains.kotlin:kotlin-test-junit:${versions.kotlin}",
+                    coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlin}",
+            ],
+            androidx       : [
+                    appcompat         : "androidx.appcompat:appcompat:${versions.androidx.appcompat}",
+                    coreKtx           : "androidx.core:core-ktx:${versions.androidx.coreKtx}",
+                    collectionKtx     : "androidx.collection:collection-ktx:${versions.androidx.collectionKtx}",
+                    fragmentKtx       : "androidx.fragment:fragment-ktx:${versions.androidx.fragmentKtx}",
+                    annotation        : "androidx.annotation:annotation:${versions.androidx.annotation}",
+                    lifecycle         : "androidx.lifecycle:lifecycle-extensions:${versions.androidx.lifecycle}",
+                    lifecycleCompiler : "androidx.lifecycle:lifecycle-compiler:${versions.androidx.lifecycle}",
+                    navigationUi      : "androidx.navigation:navigation-ui-ktx:${versions.androidx.navigation}",
+                    navigationFragment: "androidx.navigation:navigation-fragment-ktx:${versions.androidx.navigation}",
+                    test              : [
+                            coreKtx     : "androidx.test:core-ktx:${versions.androidx.test.base}",
+                            runner      : "androidx.test:runner:${versions.androidx.test.base}",
+                            rules       : "androidx.test:rules:${versions.androidx.test.base}",
+                            truth       : "androidx.test.ext:truth:${versions.androidx.test.base}",
+                            orchestrator: "androidx.test:orchestrator:${versions.androidx.test.base}",
+                            junitKtx    : "androidx.test.ext:junit-ktx:${versions.androidx.test.junitKtx}",
+                    ],
+            ],
+            test           : [
+                    mockk      : "io.mockk:mockk:${versions.test.mockk}",
+                    robolectric: "org.robolectric:robolectric:${versions.test.robolectric}",
+            ],
+            rx             : [
+                    rxJava               : "io.reactivex.rxjava2:rxjava:${versions.rx.rxJava}",
+                    rxKotlin             : "io.reactivex.rxjava2:rxkotlin:${versions.rx.rxKotlin}",
+                    rxAndroid            : "io.reactivex.rxjava2:rxandroid:${versions.rx.rxAndroid}",
+                    rxBinding            : "com.jakewharton.rxbinding3:rxbinding:${versions.rx.rxBinding}",
+                    rxBindingCore        : "com.jakewharton.rxbinding3:rxbinding-core:${versions.rx.rxBinding}",
+                    rxBindingAppcompat   : "com.jakewharton.rxbinding3:rxbinding-appcompat:${versions.rx.rxBinding}",
+                    rxBindingRecyclerview: "com.jakewharton.rxbinding3:rxbinding-recyclerview:${versions.rx.rxBinding}",
+            ],
+            autoDispose    : "com.uber.autodispose:autodispose-android:${versions.autoDispose}",
+            autoDisposeArch: "com.uber.autodispose:autodispose-android-archcomponents:${versions.autoDispose}",
+    ]
+
+    repositories {
+        maven { url mavenUrl.aliyun }
+        maven { url mavenUrl.kotlinx }
+        maven { url mavenUrl.jitpack }
+        google()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath deps.plugin.android
+        classpath deps.plugin.artifactory
+        classpath deps.plugin.kotlin
+        classpath deps.plugin.ktlint
+        classpath deps.plugin.navigationSafeArgs
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    apply plugin: 'org.jlleitschuh.gradle.ktlint'
+
+    ktlint {
+        android = true
+    }
+
+    repositories {
+        maven { url mavenUrl.aliyun }
+        maven { url mavenUrl.kotlinx }
+        google()
+        jcenter()
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            eachDependency { details ->
+                // Force all Kotlin stdlib artifacts to use the same version.
+                if (details.requested.group == 'org.jetbrains.kotlin'
+                        && details.requested.name.startsWith('kotlin-stdlib')) {
+                    details.useVersion versions.kotlin
+                }
+            }
+        }
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+}

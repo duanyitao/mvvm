@@ -1,0 +1,10 @@
+<!--suppress XmlUnusedNamespaceDeclaration -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xtc.mvvm">
+
+    <application>
+        <provider
+            android:name=".ContextProvider"
+            android:authorities="init.context" />
+    </application>
+</manifest>

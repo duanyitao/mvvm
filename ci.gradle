@@ -1,0 +1,80 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+ext.isInJenkins = { ->
+    Map<String, String> map = System.getenv()
+
+    if (map == null) {
+        return false
+    }
+    String str = map.get("Path")
+    if (str != null) {
+        //it's windows
+        return false
+    } else {
+        str = ""
+        Iterator it = map.iterator()
+        while (it.hasNext()) {
+            str += it.next()
+        }
+        return str.contains("jenkins")
+    }
+}
+
+ext.isGitTag = { ->
+    String cmd = 'git describe --tags'
+    String tagVersion = cmd.execute().text.trim()
+    println("tag name is $tagVersion")
+
+    if (tagVersion.isEmpty()) {
+        return false
+    }
+
+    Pattern pattern = Pattern.compile("-(\\d+)-g")
+    Matcher matcher = pattern.matcher(tagVersion)
+    if (matcher.find()) {
+        return false
+    }
+
+    return true
+}
+
+ext.isGitTagOfLibrary = { ->
+    if (!isGitTag()) {
+        return false
+    }
+    String tagName = gitTagName()
+    Pattern pattern = Pattern.compile("^v(\\d+).(\\d+).(\\d+)\$")
+    Matcher matcher = pattern.matcher(tagName)
+    if (matcher.find()) {
+        return true
+    }
+    return false
+}
+
+ext.gitTagName = { ->
+    String cmd = 'git describe --tags'
+    String tagVersion = cmd.execute().text.trim()
+
+    if (tagVersion.isEmpty()) {
+        return ""
+    }
+
+    Pattern pattern = Pattern.compile("-(\\d+)-g")
+    Matcher matcher = pattern.matcher(tagVersion)
+    if (matcher.find()) {
+        return tagVersion.substring(0, matcher.start())
+    }
+
+    return tagVersion
+}
+
+ext.gitCommitCount = { ->
+    String cmd = 'git rev-list HEAD --count'
+    return cmd.execute().text.trim()
+}
+
+ext.gitCommitHash = { ->
+    String cmd = 'git rev-parse --short HEAD'
+    return cmd.execute().text.trim()
+}
